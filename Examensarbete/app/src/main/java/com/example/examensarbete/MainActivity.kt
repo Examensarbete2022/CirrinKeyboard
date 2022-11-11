@@ -7,14 +7,17 @@ import android.graphics.drawable.shapes.OvalShape
 import android.os.Bundle
 import android.util.Log
 import android.view.Display
+import android.view.MotionEvent
+import android.view.View
 import android.view.View.OnClickListener
+import android.view.View.OnTouchListener
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.hardware.display.DisplayManagerCompat
 import kotlinx.android.synthetic.main.activity_main.*
-import org.w3c.dom.Text
 
 
 class MainActivity : AppCompatActivity() {
@@ -35,7 +38,6 @@ class MainActivity : AppCompatActivity() {
         paint.setStyle(Paint.Style.STROKE)
         paint.setAntiAlias(true)
         paint.setDither(true)
-
 
         // get device dimensions
         screenValue()
@@ -74,8 +76,23 @@ class MainActivity : AppCompatActivity() {
 
         imageV.background = BitmapDrawable(getResources(), bitmap)
 
-        val btn_click_me = findViewById(R.id.button) as Button
-        // set on-click listener
+        val btnArray = arrayOf(d,u,k,b,y,q,x,p,j,v,z,c,g,w,m,s,a,t,h,e,r,o,n,i,f,l)
+
+        /*for (i in btnArray.indices){
+            btnArray[i].setOnTouchListener{ view, motionEvent ->
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
+            }
+        }*/
+
+        /*button.setOnTouchListener { view, motionEvent ->
+            // Controlling the button color.
+            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                button.setTextColor(0xff000ff)
+            } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                button.setTextColor(0x00000000)
+            }
+            return@setOnTouchListener false;
+        }*/
     }
 
     private fun screenValue() {

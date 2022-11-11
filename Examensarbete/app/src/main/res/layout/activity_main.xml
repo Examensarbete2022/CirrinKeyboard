@@ -16,7 +16,7 @@
         android:text="d"
         android:textAllCaps="false"
         android:textColor="@color/black"
-        android:id="@+id/button"
+        android:id="@+id/d"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="170dp"
@@ -31,7 +31,7 @@
 
     <Button
         android:text="k"
-        android:id="@+id/button1"
+        android:id="@+id/k"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:layout_width="50dp"
@@ -48,7 +48,7 @@
 
     <Button
         android:text="u"
-        android:id="@+id/button2"
+        android:id="@+id/u"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:layout_width="50dp"
@@ -64,7 +64,7 @@
 
     <Button
         android:text="b"
-        android:id="@+id/button3"
+        android:id="@+id/b"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:layout_width="50dp"
@@ -80,7 +80,7 @@
 
     <Button
         android:text="y"
-        android:id="@+id/button4"
+        android:id="@+id/y"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:layout_width="50dp"
@@ -96,7 +96,7 @@
 
     <Button
         android:text="q"
-        android:id="@+id/button5"
+        android:id="@+id/q"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:layout_width="50dp"
@@ -113,7 +113,7 @@
 
     <Button
         android:text="x"
-        android:id="@+id/button6"
+        android:id="@+id/x"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:layout_width="50dp"
@@ -130,7 +130,7 @@
 
     <Button
         android:text="p"
-        android:id="@+id/button7"
+        android:id="@+id/p"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:layout_width="50dp"
@@ -146,7 +146,7 @@
         app:layout_constraintTop_toTopOf="@+id/imageV" />
 
     <Button
-        android:id="@+id/button8"
+        android:id="@+id/j"
         android:text="j"
         android:textAllCaps="false"
         android:textColor="@color/black"
@@ -163,7 +163,7 @@
         app:layout_constraintTop_toTopOf="@+id/imageV" />
 
     <Button
-        android:id="@+id/button9"
+        android:id="@+id/v"
         android:text="v"
         android:textAllCaps="false"
         android:textColor="@color/black"
@@ -181,7 +181,7 @@
 
     <Button
         android:text="z"
-        android:id="@+id/button10"
+        android:id="@+id/z"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:layout_width="50dp"
@@ -198,7 +198,7 @@
 
     <Button
         android:text="c"
-        android:id="@+id/button11"
+        android:id="@+id/c"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:layout_width="50dp"
@@ -215,7 +215,7 @@
 
     <Button
         android:text="g"
-        android:id="@+id/button12"
+        android:id="@+id/g"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:layout_width="50dp"
@@ -232,7 +232,7 @@
 
     <Button
         android:text="w"
-        android:id="@+id/button13"
+        android:id="@+id/w"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:layout_width="50dp"
@@ -249,7 +249,7 @@
 
     <Button
         android:text="m"
-        android:id="@+id/button14"
+        android:id="@+id/m"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:layout_width="50dp"
@@ -266,7 +266,7 @@
 
     <Button
         android:text="s"
-        android:id="@+id/button15"
+        android:id="@+id/s"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:layout_width="50dp"
@@ -283,7 +283,7 @@
 
     <Button
         android:text="a"
-        android:id="@+id/button16"
+        android:id="@+id/a"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:layout_width="50dp"
@@ -299,7 +299,7 @@
         app:layout_constraintTop_toTopOf="@+id/imageV" />
 
     <Button
-        android:id="@+id/button17"
+        android:id="@+id/t"
         android:text="t"
         android:textAllCaps="false"
         android:textColor="@color/black"
@@ -317,7 +317,7 @@
 
     <Button
         android:text="h"
-        android:id="@+id/button18"
+        android:id="@+id/h"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:layout_width="50dp"
@@ -334,7 +334,7 @@
 
     <Button
         android:text="e"
-        android:id="@+id/button19"
+        android:id="@+id/e"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:layout_width="50dp"
@@ -351,7 +351,7 @@
 
     <Button
         android:text="r"
-        android:id="@+id/button20"
+        android:id="@+id/r"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:layout_width="50dp"
@@ -368,7 +368,7 @@
 
     <Button
         android:text="o"
-        android:id="@+id/button21"
+        android:id="@+id/o"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:layout_width="50dp"
@@ -385,7 +385,7 @@
 
     <Button
         android:text="n"
-        android:id="@+id/button22"
+        android:id="@+id/n"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:layout_width="50dp"
@@ -402,7 +402,7 @@
 
     <Button
         android:text="i"
-        android:id="@+id/button23"
+        android:id="@+id/i"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:layout_width="50dp"
@@ -419,7 +419,7 @@
 
     <Button
         android:text="f"
-        android:id="@+id/button24"
+        android:id="@+id/f"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:layout_width="50dp"
@@ -436,7 +436,7 @@
 
     <Button
         android:text="l"
-        android:id="@+id/button25"
+        android:id="@+id/l"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:layout_width="50dp"
@@ -450,7 +450,5 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageV" />
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
