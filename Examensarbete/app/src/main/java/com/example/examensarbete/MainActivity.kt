@@ -9,20 +9,16 @@ import android.util.Log
 import android.view.Display
 import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnClickListener
-import android.view.View.OnTouchListener
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat.getAction
 import androidx.core.hardware.display.DisplayManagerCompat
+import androidx.core.view.accessibility.AccessibilityEventCompat.getAction
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : AppCompatActivity() {
+open class MainActivity : AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?){
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -33,21 +29,21 @@ class MainActivity : AppCompatActivity() {
         canvas.drawARGB(1, 255, 255, 255)
 
         val paint = Paint()
-        paint.setColor(Color.parseColor("#000000"))
-        paint.setStrokeWidth(10F)
-        paint.setStyle(Paint.Style.STROKE)
-        paint.setAntiAlias(true)
-        paint.setDither(true)
+        paint.color = Color.parseColor("#000000")
+        paint.strokeWidth = 10F
+        paint.style = Paint.Style.STROKE
+        paint.isAntiAlias = true
+        paint.isDither = true
 
         // get device dimensions
         screenValue()
 
-        val rect = RectF(50f,900f,850f,1700f)
+        val rect = RectF(50f, 900f, 850f, 1700f)
 
         val degree = 13.84f
         var currentAngle = 0f
-        for(i in 0 until 26) {
-            if( i % 2 == 0)
+        for (i in 0 until 26) {
+            if (i % 2 == 0)
                 paint.color = Color.BLACK
             canvas.drawArc(rect, currentAngle, degree, true, paint)
             currentAngle += degree
@@ -60,8 +56,8 @@ class MainActivity : AppCompatActivity() {
         var bottom = 1600
 
         shapeDrawable = ShapeDrawable(OvalShape())
-        shapeDrawable.setBounds( left, top, right, bottom)
-        shapeDrawable.getPaint().setColor(Color.parseColor("#000000"))
+        shapeDrawable.setBounds(left, top, right, bottom)
+        shapeDrawable.paint.color = Color.parseColor("#000000")
         shapeDrawable.draw(canvas)
 
         left = 160
@@ -70,19 +66,15 @@ class MainActivity : AppCompatActivity() {
         bottom = 1590
 
         shapeDrawable = ShapeDrawable(OvalShape())
-        shapeDrawable.setBounds( left, top, right, bottom)
-        shapeDrawable.getPaint().setColor(Color.parseColor("#FFFFFF"))
+        shapeDrawable.setBounds(left, top, right, bottom)
+        shapeDrawable.paint.color = Color.parseColor("#FFFFFF")
         shapeDrawable.draw(canvas)
 
-        imageV.background = BitmapDrawable(getResources(), bitmap)
+        imageV.background = BitmapDrawable(resources, bitmap)
 
-        val btnArray = arrayOf(d,u,k,b,y,q,x,p,j,v,z,c,g,w,m,s,a,t,h,e,r,o,n,i,f,l)
+        val btnArray =
+            arrayOf(d, u, k, b, y, q, x, p, j, v, z, c, g, w, m, s, a, t, h, e, r, o, n, i, f, l)
 
-        /*for (i in btnArray.indices){
-            btnArray[i].setOnTouchListener{ view, motionEvent ->
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
-            }
-        }*/
 
         /*button.setOnTouchListener { view, motionEvent ->
             // Controlling the button color.
