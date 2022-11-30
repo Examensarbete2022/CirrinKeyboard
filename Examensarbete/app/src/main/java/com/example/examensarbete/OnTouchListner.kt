@@ -15,7 +15,22 @@ class OnTouchListner : MainActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val array = arrayOf<String>()
+        myLayout.setOnTouchListener{view, motionEvent ->
+            when(motionEvent.action){
+                MotionEvent.ACTION_DOWN -> {
+                    val x = motionEvent.x
+                    val y = motionEvent.y
+                    val button = Button(this)
+                    button.text = "Button"
+                    button.x = x
+                    button.y = y
+                    myLayout.addView(button)
+                }
+            }
+            true
+        }
+
+        /*val array = arrayOf<String>()
 
         d.findViewById<Button>(R.id.d).setOnTouchListener { v: View, m: MotionEvent ->
             print(array)
@@ -95,7 +110,7 @@ class OnTouchListner : MainActivity() {
         }
         l.findViewById<Button>(R.id.l).setOnTouchListener { v: View, m: MotionEvent ->
             true
-        }
+        }*/
     }
 }
 
