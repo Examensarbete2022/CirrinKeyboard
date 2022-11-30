@@ -9,11 +9,16 @@ import android.util.Log
 import android.view.Display
 import android.view.MotionEvent
 import android.view.View
+import android.widget.Button
+import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintSet.Motion
 import androidx.core.app.NotificationCompat.getAction
 import androidx.core.hardware.display.DisplayManagerCompat
 import androidx.core.view.accessibility.AccessibilityEventCompat.getAction
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlin.math.log
 
 
 open class MainActivity : AppCompatActivity() {
@@ -21,6 +26,57 @@ open class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val btnArray = MutableList<String>(26) { "" }
+
+        myLayout.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                Log.i("TouchEvents", "Touch is detected")
+                //create listner for all buttons in myLayout
+                for (i in 0 until myLayout.childCount) {
+                    val child = myLayout.getChildAt(i)
+                    if (child is Button) {
+                        child.setOnTouchListener(object : View.OnTouchListener {
+                            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                                val eventaction = event?.action
+                                for(i in 0 until btnArray.size){
+                                    if(btnArray[i] == child.text){
+                                        btnArray[i] = ""
+                                    }
+                                }
+                                //create switch case
+                                /*when (eventaction) {
+                                    MotionEvent.ACTION_DOWN -> {
+                                        btnArray.add(child.text.toString())
+                                        Log.d("array", btnArray.toString())
+                                        Log.i("TouchEvents", "Button is added")
+                                    }
+                                    else -> {
+
+                                        Log.i("TouchEvents", "Button is not added")
+                                    }
+                                }
+                                when(eventaction) {
+                                    MotionEvent.ACTION_MOVE -> {
+                                        //call MotionEvent.CANCEL to reset the button input on action down
+                                        MotionEvent.ACTION_CANCEL
+                                        Log.i("TouchEvents", "Button is reset")
+
+                                    }
+                                    else -> {
+                                        btnArray.add(child.text.toString())
+                                        Log.d("array", btnArray.toString())
+                                        Log.i("TouchEvents", "Button is not removed")
+                                    }
+                                }*/
+                                return true
+                            }
+                        })
+                    }
+                }
+                return true
+            }
+        })
 
         val bitmap = Bitmap.createBitmap(900, 1800, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
@@ -71,10 +127,6 @@ open class MainActivity : AppCompatActivity() {
         shapeDrawable.draw(canvas)
 
         imageV.background = BitmapDrawable(resources, bitmap)
-
-        val btnArray =
-            arrayOf(d, u, k, b, y, q, x, p, j, v, z, c, g, w, m, s, a, t, h, e, r, o, n, i, f, l)
-
 
         /*button.setOnTouchListener { view, motionEvent ->
             // Controlling the button color.
