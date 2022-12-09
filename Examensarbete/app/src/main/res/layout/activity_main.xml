@@ -10,7 +10,9 @@
     <ImageView
         android:id="@+id/imageV"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="41dp"
+        tools:layout_editor_absoluteY="-72dp" />
 
     <Button
         android:text="d"

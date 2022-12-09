@@ -10,8 +10,8 @@
         android:pivotY="210.0"
         android:rotation="90.0" >
         <path
-            android:fillColor="@android:color/transparent"
-            android:strokeColor="@android:color/transparent"
+            android:fillColor="@android:color/black"
+            android:strokeColor="@android:color/white"
             android:strokeWidth="4"
             android:pathData="M-55,70 L200,110 L200,290 L-55,330 z"/>
     </group>
