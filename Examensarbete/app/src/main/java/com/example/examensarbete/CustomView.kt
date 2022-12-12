@@ -18,8 +18,10 @@ class CustomView(context: Context) : View(context) {
 
     //create 26 circles that sits in a circle
     val circleList = mutableListOf<Circle>()
+
     //create list of all the letters in the alphabet
-    val alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    val alphabet = arrayOf("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
+
 
 
     init {
@@ -32,6 +34,7 @@ class CustomView(context: Context) : View(context) {
         }
     }
 
+
     val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.BLACK
         style = Paint.Style.STROKE
@@ -41,6 +44,9 @@ class CustomView(context: Context) : View(context) {
     var str = ""
 
     override fun onDraw(canvas: Canvas?) {
+
+        val alphabet = arrayOf("x", "p", "j", "v", "z", "c", "g", "w", "m", "s", "a", "t", "h", "e", "r", "o", "n", "i", "f", "l", "d", "u", "k", "b", "y", "q")
+
         canvas?.apply{
             if (touched) {
                 drawColor(Color.BLUE)
@@ -48,7 +54,13 @@ class CustomView(context: Context) : View(context) {
                 drawColor(Color.WHITE)
             }
             drawCircle(circle1, paint)
-            //drawCircle(circle2, paint)
+           // drawCircle(circle2, paint)
+            for (i in 0..25) {
+                drawCircle(circleList[i], paint)
+                drawText(alphabet[i], circleList[i]. x - 15, circleList[i].y + 10, paint)
+                paint.textSize = 40f
+
+            }
             circleList.forEach {
                 drawCircle(it.x, it.y, it.radius, paint)
             }
@@ -80,6 +92,7 @@ class CustomView(context: Context) : View(context) {
                     Log.d("Touched", "Touched move at: $x, Y: $y")
                     when(selectedCircle) {
                         circle1 -> circle1.offsetTo(x, y)
+                        //circle2 -> circle2.offsetTo(x, y)
                         else -> return true
                     }
                     when(circle1 intersects circleList[0] || circle1 intersects circleList[1] || circle1 intersects circleList[2] || circle1 intersects circleList[3] || circle1 intersects circleList[4] || circle1 intersects circleList[5] || circle1 intersects circleList[6] || circle1 intersects circleList[7] || circle1 intersects circleList[8] || circle1 intersects circleList[9] || circle1 intersects circleList[10] || circle1 intersects circleList[11] || circle1 intersects circleList[12] || circle1 intersects circleList[13] || circle1 intersects circleList[14] || circle1 intersects circleList[15] || circle1 intersects circleList[16] || circle1 intersects circleList[17] || circle1 intersects circleList[18] || circle1 intersects circleList[19] || circle1 intersects circleList[20] || circle1 intersects circleList[21] || circle1 intersects circleList[22] || circle1 intersects circleList[23] || circle1 intersects circleList[24] || circle1 intersects circleList[25]) {

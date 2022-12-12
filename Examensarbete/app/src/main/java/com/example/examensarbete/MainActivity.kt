@@ -1,5 +1,6 @@
 package com.example.examensarbete
 
+import android.app.Activity
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ShapeDrawable
@@ -21,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlin.math.log
 
 
-open class MainActivity : AppCompatActivity() {
+open class MainActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
