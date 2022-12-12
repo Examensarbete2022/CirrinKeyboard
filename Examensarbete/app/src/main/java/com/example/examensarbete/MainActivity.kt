@@ -27,5 +27,4 @@ open class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(CustomView(this))
     }
-
 }
