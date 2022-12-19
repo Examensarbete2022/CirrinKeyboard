@@ -96,7 +96,8 @@ class CustomView(context: Context) : View(context) {
                         circle1 -> circle1.offsetTo(x, y)
                         else -> return true
                     }
-                    if (circle1 intersects circleList[0] || circle1 intersects circleList[1] || circle1 intersects circleList[2] || circle1 intersects circleList[3] || circle1 intersects circleList[4] || circle1 intersects circleList[5] || circle1 intersects circleList[6] || circle1 intersects circleList[7] || circle1 intersects circleList[8] || circle1 intersects circleList[9] || circle1 intersects circleList[10] || circle1 intersects circleList[11] || circle1 intersects circleList[12] || circle1 intersects circleList[13] || circle1 intersects circleList[14] || circle1 intersects circleList[15] || circle1 intersects circleList[16] || circle1 intersects circleList[17] || circle1 intersects circleList[18] || circle1 intersects circleList[19] || circle1 intersects circleList[20] || circle1 intersects circleList[21] || circle1 intersects circleList[22] || circle1 intersects circleList[23] || circle1 intersects circleList[24] || circle1 intersects circleList[25]) {
+
+                    if(circleList.any { circle -> circle1 intersects circle }) {
                         touched = true
                         invalidate()
 
