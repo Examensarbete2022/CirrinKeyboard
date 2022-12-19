@@ -1,6 +1,5 @@
 package com.example.examensarbete
 
-import android.R.attr
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -8,12 +7,13 @@ import android.graphics.Paint
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import java.util.logging.Handler
 
 
 class CustomView(context: Context) : View(context) {
 
     var touched = false
-    val circle1 = Circle(500f, 1200f, 25f)
+   // val circle1 = Circle(500f, 1200f, 25f)
     var selectedCircle: Circle? = null
 
     //create 26 circles that sits in a circle
@@ -50,7 +50,7 @@ class CustomView(context: Context) : View(context) {
             } else {
                 drawColor(Color.WHITE)
             }*/
-            drawCircle(circle1, paint)
+            //drawCircle(circle1, paint)
             //drawCircle(circle2, paint)
             circleList.forEach {
                 drawCircle(it.x, it.y, it.radius, paint)
@@ -64,11 +64,11 @@ class CustomView(context: Context) : View(context) {
             drawCircle(550f, 1400f, 350f, paint)
 
             paint.textSize = 75f
-            canvas.drawText("${str}", 10f, 100f, paint)
+            canvas.drawText(str, 10f, 100f, paint)
 
         }
     }
-
+    /*
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         event?.apply {
             when (action) {
@@ -122,6 +122,8 @@ class CustomView(context: Context) : View(context) {
                 MotionEvent.ACTION_UP -> {
                     //if str isnt  empty, add to dynamicTextView and after empty str
                     Log.d("Touched", "Touched up at: $str")
+                    selectedCircle = null
+                    return true
 
                     /*if (str != "") {
                         dynamicTextView.text = str
@@ -129,11 +131,70 @@ class CustomView(context: Context) : View(context) {
                     }*/
 
                 }
+                else -> return super.onTouchEvent(event)
             }
 
         }
         return true
     }
+
+
+
+     */
+
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        event?.apply {
+            when (action) {
+                MotionEvent.ACTION_DOWN -> {
+                    Log.d("Touched", "Touched down at: $x, Y: $y")
+                    // Find the circle that was touched
+                    selectedCircle = circleList.firstOrNull { it.contains(x, y) }
+                    return true
+                }
+
+                MotionEvent.ACTION_MOVE -> {
+                    Log.d("Touched", "Touched move at: $x, Y: $y")
+                    // Check if any of the circles in circleList intersect with the selected circle
+                    if (selectedCircle != null && circleList.any { circle -> circle intersects selectedCircle!! }) {
+                        // Set touched flag to true and invalidate the view
+                        touched = true
+                        invalidate()
+
+                            for (i in 0 until circleList.size) {
+                                if (selectedCircle!! intersects circleList[i]) {
+                                    if (str.isEmpty()) {
+                                        str += alphabet[i]
+                                    } else if (str.last() == alphabet[i]) {
+                                        // Do nothing if the last character in the string is the same as the current character
+                                    } else {
+                                        str += alphabet[i]
+                                    }
+                                    Log.d("Touched", "Touched move at: $str")
+                            }
+                        }
+
+                    } else {
+                        // Set touched flag to false and invalidate the view
+                        touched = false
+                        invalidate()
+                    }
+                }
+                MotionEvent.ACTION_UP -> {
+                    selectedCircle = null
+                    return true
+                }
+                else -> return super.onTouchEvent(event)
+            }
+        }
+        return true
+    }
+
+
+
+
+
+
 }
 
 
