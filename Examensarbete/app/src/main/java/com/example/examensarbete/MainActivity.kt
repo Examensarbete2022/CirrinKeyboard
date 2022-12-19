@@ -17,7 +17,7 @@ import androidx.core.app.NotificationCompat.getAction
 import androidx.core.hardware.display.DisplayManagerCompat
 import androidx.core.view.accessibility.AccessibilityEventCompat.getAction
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.android.synthetic.main.swipe.view.*
 import kotlin.math.log
 
 

@@ -1,5 +1,6 @@
 package com.example.examensarbete
 
+import android.R.attr
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -7,8 +8,7 @@ import android.graphics.Paint
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import kotlinx.android.synthetic.main.activity_main.view.*
-import kotlinx.android.synthetic.main.swipe.view.*
+
 
 class CustomView(context: Context) : View(context) {
 
@@ -20,6 +20,8 @@ class CustomView(context: Context) : View(context) {
     val circleList = mutableListOf<Circle>()
     //create list of all the letters in the alphabet
     var alphabet = arrayOf('x', 'p', 'j', 'v', 'z', 'c', 'g', 'w', 'm', 's', 'a', 't', 'h', 'e', 'r', 'o', 'n', 'i', 'f', 'l', 'd', 'u', 'k', 'b', 'y', 'q')
+
+
 
     init {
         for (i in 0..25) {
@@ -41,11 +43,13 @@ class CustomView(context: Context) : View(context) {
 
     override fun onDraw(canvas: Canvas?) {
         canvas?.apply{
-            if (touched) {
+
+
+            /*if (touched) {
                 drawColor(Color.BLUE)
             } else {
                 drawColor(Color.WHITE)
-            }
+            }*/
             drawCircle(circle1, paint)
             //drawCircle(circle2, paint)
             circleList.forEach {
@@ -58,6 +62,9 @@ class CustomView(context: Context) : View(context) {
 
             drawCircle(550f, 1400f, 450f, paint)
             drawCircle(550f, 1400f, 350f, paint)
+
+            paint.textSize = 75f
+            canvas.drawText("${str}", 10f, 100f, paint)
 
         }
     }
@@ -85,31 +92,48 @@ class CustomView(context: Context) : View(context) {
                 }
                 MotionEvent.ACTION_MOVE -> {
                     Log.d("Touched", "Touched move at: $x, Y: $y")
-                    when(selectedCircle) {
+                    when (selectedCircle) {
                         circle1 -> circle1.offsetTo(x, y)
                         else -> return true
                     }
-                    if(circle1 intersects circleList[0] || circle1 intersects circleList[1] || circle1 intersects circleList[2] || circle1 intersects circleList[3] || circle1 intersects circleList[4] || circle1 intersects circleList[5] || circle1 intersects circleList[6] || circle1 intersects circleList[7] || circle1 intersects circleList[8] || circle1 intersects circleList[9] || circle1 intersects circleList[10] || circle1 intersects circleList[11] || circle1 intersects circleList[12] || circle1 intersects circleList[13] || circle1 intersects circleList[14] || circle1 intersects circleList[15] || circle1 intersects circleList[16] || circle1 intersects circleList[17] || circle1 intersects circleList[18] || circle1 intersects circleList[19] || circle1 intersects circleList[20] || circle1 intersects circleList[21] || circle1 intersects circleList[22] || circle1 intersects circleList[23] || circle1 intersects circleList[24] || circle1 intersects circleList[25]) {
+                    if (circle1 intersects circleList[0] || circle1 intersects circleList[1] || circle1 intersects circleList[2] || circle1 intersects circleList[3] || circle1 intersects circleList[4] || circle1 intersects circleList[5] || circle1 intersects circleList[6] || circle1 intersects circleList[7] || circle1 intersects circleList[8] || circle1 intersects circleList[9] || circle1 intersects circleList[10] || circle1 intersects circleList[11] || circle1 intersects circleList[12] || circle1 intersects circleList[13] || circle1 intersects circleList[14] || circle1 intersects circleList[15] || circle1 intersects circleList[16] || circle1 intersects circleList[17] || circle1 intersects circleList[18] || circle1 intersects circleList[19] || circle1 intersects circleList[20] || circle1 intersects circleList[21] || circle1 intersects circleList[22] || circle1 intersects circleList[23] || circle1 intersects circleList[24] || circle1 intersects circleList[25]) {
                         touched = true
                         invalidate()
 
-                        //if circle1 intersects with circleList[i] then add the letter to the string
                         for (i in 0..25) {
                             if (circle1 intersects circleList[i]) {
-                                str += alphabet[i]
+                                if(str.length == 0) {
+                                    str += alphabet[i]
+                                } else if(str[i] == str[i-1]) {
+
+                                }else {
+                                    str += alphabet[i]
+                                }
                                 Log.d("Touched", "Touched move at: $str")
+                            }else{
 
                             }
                         }
-                    }else {
+                    } else {
                         touched = false
                         invalidate()
                     }
 
                 }
+                MotionEvent.ACTION_UP -> {
+                    //if str isnt  empty, add to dynamicTextView and after empty str
+                    Log.d("Touched", "Touched up at: $str")
+
+                    /*if (str != "") {
+                        dynamicTextView.text = str
+                        str = ""
+                    }*/
+
+                }
             }
+
         }
-        return false
+        return true
     }
 }
 

@@ -17,4 +17,7 @@ class Circle(var x: Float, var y: Float, var radius: Float) {
     infix fun intersects(other: Circle): Boolean {
         return sqrt((other.x - this.x).toDouble().pow(2.0) + (other.y - this.y).toDouble().pow(2.0)) < radius + other.radius
     }
+
+    //skapa en funtion som använder intersects men som funkar som en onMouseEnter och onMouseLeave
+
 }
