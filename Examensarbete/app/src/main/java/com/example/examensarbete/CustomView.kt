@@ -102,16 +102,14 @@ class CustomView(context: Context) : View(context) {
 
                         for (i in 0..25) {
                             if (circle1 intersects circleList[i]) {
-                                if(str.length == 0) {
+                                if (str.isEmpty()) {
                                     str += alphabet[i]
-                                } else if(str[i] == str[i-1]) {
-
-                                }else {
+                                } else if (str.last() == alphabet[i]) {
+                                    // Do nothing if the last character in the string is the same as the current character
+                                } else {
                                     str += alphabet[i]
                                 }
                                 Log.d("Touched", "Touched move at: $str")
-                            }else{
-
                             }
                         }
                     } else {
