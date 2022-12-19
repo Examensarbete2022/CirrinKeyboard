@@ -21,8 +21,6 @@ class CustomView(context: Context) : View(context) {
     //create list of all the letters in the alphabet
     var alphabet = arrayOf('x', 'p', 'j', 'v', 'z', 'c', 'g', 'w', 'm', 's', 'a', 't', 'h', 'e', 'r', 'o', 'n', 'i', 'f', 'l', 'd', 'u', 'k', 'b', 'y', 'q')
 
-
-
     init {
         for (i in 0..25) {
             val angle = i * 2 * Math.PI / 26
@@ -43,13 +41,6 @@ class CustomView(context: Context) : View(context) {
 
     override fun onDraw(canvas: Canvas?) {
         canvas?.apply{
-
-
-            /*if (touched) {
-                drawColor(Color.BLUE)
-            } else {
-                drawColor(Color.WHITE)
-            }*/
             drawCircle(circle1, paint)
             //drawCircle(circle2, paint)
             circleList.forEach {
@@ -74,18 +65,8 @@ class CustomView(context: Context) : View(context) {
             when (action) {
                 MotionEvent.ACTION_DOWN -> {
                     Log.d("Touched", "Touched down at: $x, Y: $y")
-                    /*
-                    selectedCircle = if (circle1.contains(x, y)) {
-                        circle1
-                    } else if (circle2.contains(x, y)) {
-                        circle2
-                    } else {
-                        null
-                    }
-                    */
                     selectedCircle = when {
                         circle1.contains(x, y) -> circle1
-                        //circle2.contains(x, y) -> circle2
                         else -> null
                     }
                     return true
@@ -102,16 +83,13 @@ class CustomView(context: Context) : View(context) {
 
                         for (i in 0..25) {
                             if (circle1 intersects circleList[i]) {
-                                if(str.length == 0) {
+                                if(str.isEmpty()) {
                                     str += alphabet[i]
-                                } else if(str[i] == str[i-1]) {
-
-                                }else {
+                                } else if(str.last() == alphabet[i]) {
+                                } else {
                                     str += alphabet[i]
                                 }
                                 Log.d("Touched", "Touched move at: $str")
-                            }else{
-
                             }
                         }
                     } else {
@@ -121,13 +99,10 @@ class CustomView(context: Context) : View(context) {
 
                 }
                 MotionEvent.ACTION_UP -> {
-                    //if str isnt  empty, add to dynamicTextView and after empty str
                     Log.d("Touched", "Touched up at: $str")
-
-                    /*if (str != "") {
-                        dynamicTextView.text = str
-                        str = ""
-                    }*/
+                    if(str.isNotEmpty()) {
+                        str += " "
+                    }
 
                 }
             }
@@ -136,88 +111,3 @@ class CustomView(context: Context) : View(context) {
         return true
     }
 }
-
-
-
-
-
-/*fun swype(input: String): String {
-    val inputLetters = input.toLowerCase().toCharArray()
-    var result = ""
-
-    // loop through each letter in the input
-    for (i in 0 until inputLetters.size) {
-        val currentLetter = inputLetters[i]
-        val nextLetter = if (i + 1 < inputLetters.size) inputLetters[i + 1] else ' '
-
-        // check if the current letter and the next letter are adjacent on the keyboard
-        if (isAdjacent(currentLetter, nextLetter)) {
-            // if they are, add the current letter to the result and skip the next letter
-            result += currentLetter
-            i++
-        } else {
-            // if they are not adjacent, add the current letter to the result
-            result += currentLetter
-        }
-    }
-
-    return result
-}
-
-fun isAdjacent(current: Char, next: Char): Boolean {
-    // define the keyboard layout as a 2D array of characters
-    val keyboard = arrayOf(
-        charArrayOf('q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'),
-        charArrayOf('a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'),
-        charArrayOf('z', 'x', 'c', 'v', 'b', 'n', 'm')
-    )
-
-    // find the current and next letters on the keyboard
-    val currentPosition = keyboard.map { it.indexOf(current) }.filter { it >= 0 }.firstOrNull()
-    val nextPosition = keyboard.map { it.indexOf(next) }.
-        filter { it >= 0 }.firstOrNull()
-
-    // if the current letter is not on the keyboard, return false
-    if (currentPosition == null) {
-        return false
-    }
-
-
-    */
-
-/*class SwipeKeyboard {
-    private val keyboard = CirrinKeyboard()
-
-    // map of swipe directions to the corresponding key on the keyboard
-    private val swipeMap = mapOf(
-        SwipeDirection.UP to keyboard.keyUp,
-        SwipeDirection.DOWN to keyboard.keyDown,
-        SwipeDirection.LEFT to keyboard.keyLeft,
-        SwipeDirection.RIGHT to keyboard.keyRight
-    )
-
-    // list of swipe input
-    private val swipeInput = mutableListOf<SwipeDirection>()
-
-    // max length of swipe input to consider
-    private val maxSwipeLength = 4
-
-    fun onSwipe(swipeDirection: SwipeDirection) {
-        // add swipe direction to input list
-        swipeInput.add(swipeDirection)
-
-        // if swipe input is longer than max length, remove first item
-        if (swipeInput.size > maxSwipeLength) {
-            swipeInput.removeAt(0)
-        }
-
-        // get corresponding key for current swipe input
-        val key = swipeMap[swipeInput]
-
-        // if key is not null, simulate a press of the key
-        key?.let {
-            it.simulatePress()
-        }
-    }
-}
-*/
