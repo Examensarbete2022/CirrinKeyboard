@@ -15,6 +15,8 @@ class CustomView(context: Context) : View(context) {
     var touched = false
    // val circle1 = Circle(500f, 1200f, 25f)
     var selectedCircle: Circle? = null
+    var latestInteraction : Circle? = null
+
 
     //create 26 circles that sits in a circle
     val circleList = mutableListOf<Circle>()
@@ -26,10 +28,9 @@ class CustomView(context: Context) : View(context) {
     init {
         for (i in 0..25) {
             val angle = i * 2 * Math.PI / 26
-            val x = 400 + 400 * Math.cos(angle)
-            val y = 400 + 400 * Math.sin(angle)
-            circleList.add(Circle(x.toFloat() + 150, y.toFloat() + 1000, 50f))
-
+            val x = 450 + 450 * Math.cos(angle)
+            val y = 450 + 450 * Math.sin(angle)
+            circleList.add(Circle(x.toFloat() + 80, y.toFloat() + 1000, 50f))
         }
     }
 
@@ -43,15 +44,6 @@ class CustomView(context: Context) : View(context) {
 
     override fun onDraw(canvas: Canvas?) {
         canvas?.apply{
-
-
-            /*if (touched) {
-                drawColor(Color.BLUE)
-            } else {
-                drawColor(Color.WHITE)
-            }*/
-            //drawCircle(circle1, paint)
-            //drawCircle(circle2, paint)
             circleList.forEach {
                 drawCircle(it.x, it.y, it.radius, paint)
             }
@@ -60,120 +52,45 @@ class CustomView(context: Context) : View(context) {
                 paint.textSize = 40f
             }
 
-            drawCircle(550f, 1400f, 450f, paint)
-            drawCircle(550f, 1400f, 350f, paint)
+            drawCircle(530f, 1450f, 500f, paint)
+            drawCircle(530f, 1450f, 400f, paint)
+            Paint.Style.FILL
+            drawText("Clear", 50f, 1970f, paint)
+
+            val clear = drawRect(200f, 1900f, 20f, 2000f, paint)
 
             paint.textSize = 75f
+            Paint.Style.FILL
             canvas.drawText(str, 10f, 100f, paint)
 
         }
     }
-    /*
+
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         event?.apply {
             when (action) {
                 MotionEvent.ACTION_DOWN -> {
-                    Log.d("Touched", "Touched down at: $x, Y: $y")
-                    /*
-                    selectedCircle = if (circle1.contains(x, y)) {
-                        circle1
-                    } else if (circle2.contains(x, y)) {
-                        circle2
-                    } else {
-                        null
-                    }
-                    */
-                    selectedCircle = when {
-                        circle1.contains(x, y) -> circle1
-                        //circle2.contains(x, y) -> circle2
-                        else -> null
-                    }
-                    return true
                 }
                 MotionEvent.ACTION_MOVE -> {
-                    Log.d("Touched", "Touched move at: $x, Y: $y")
-                    when (selectedCircle) {
-                        circle1 -> circle1.offsetTo(x, y)
-                        else -> return true
-                    }
-
-                    if(circleList.any { circle -> circle1 intersects circle }) {
-                        touched = true
-                        invalidate()
-
-                        for (i in 0..25) {
-                            if (circle1 intersects circleList[i]) {
-                                if (str.isEmpty()) {
-                                    str += alphabet[i]
-                                } else if (str.last() == alphabet[i]) {
-                                    // Do nothing if the last character in the string is the same as the current character
-                                } else {
-                                    str += alphabet[i]
-                                }
-                                Log.d("Touched", "Touched move at: $str")
-                            }
-                        }
-                    } else {
-                        touched = false
-                        invalidate()
-                    }
-
-                }
-                MotionEvent.ACTION_UP -> {
-                    //if str isnt  empty, add to dynamicTextView and after empty str
-                    Log.d("Touched", "Touched up at: $str")
-                    selectedCircle = null
-                    return true
-
-                    /*if (str != "") {
-                        dynamicTextView.text = str
-                        str = ""
-                    }*/
-
-                }
-                else -> return super.onTouchEvent(event)
-            }
-
-        }
-        return true
-    }
-
-
-
-     */
-
-
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
-        event?.apply {
-            when (action) {
-                MotionEvent.ACTION_DOWN -> {
-                    Log.d("Touched", "Touched down at: $x, Y: $y")
-                    // Find the circle that was touched
+                    var isInsideCenterCircle = (x - 530) * (x - 530) + (y - 1450) * (y - 1450) < 400 * 400
                     selectedCircle = circleList.firstOrNull { it.contains(x, y) }
-                    return true
-                }
-
-                MotionEvent.ACTION_MOVE -> {
-                    Log.d("Touched", "Touched move at: $x, Y: $y")
                     // Check if any of the circles in circleList intersect with the selected circle
                     if (selectedCircle != null && circleList.any { circle -> circle intersects selectedCircle!! }) {
                         // Set touched flag to true and invalidate the view
                         touched = true
                         invalidate()
-
-                            for (i in 0 until circleList.size) {
-                                if (selectedCircle!! intersects circleList[i]) {
-                                    if (str.isEmpty()) {
+                        if(!isInsideCenterCircle){
+                            Log.d("Touched", "Touched move at: $x, Y: $y")
+                            for (i in 0..25) {
+                                if (selectedCircle!! intersects circleList[i] && latestInteraction != circleList[i]) {
                                         str += alphabet[i]
-                                    } else if (str.last() == alphabet[i]) {
-                                        // Do nothing if the last character in the string is the same as the current character
-                                    } else {
-                                        str += alphabet[i]
-                                    }
+                                        latestInteraction = selectedCircle
                                     Log.d("Touched", "Touched move at: $str")
+                                }
                             }
+                        }else{
+                            latestInteraction = null
                         }
-
                     } else {
                         // Set touched flag to false and invalidate the view
                         touched = false
@@ -181,25 +98,18 @@ class CustomView(context: Context) : View(context) {
                     }
                 }
                 MotionEvent.ACTION_UP -> {
-                    selectedCircle = null
-                    return true
+                    if (str != "") {
+                        str += " "
+                        latestInteraction = null
+                    }
+
                 }
                 else -> return super.onTouchEvent(event)
             }
         }
         return true
     }
-
-
-
-
-
-
 }
-
-
-
-
 
 /*fun swype(input: String): String {
     val inputLetters = input.toLowerCase().toCharArray()
@@ -280,4 +190,4 @@ fun isAdjacent(current: Char, next: Char): Boolean {
         }
     }
 }
-*/
+*///}
