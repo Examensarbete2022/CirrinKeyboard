@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import kotlinx.android.synthetic.main.activity_main.view.*
 import java.util.logging.Handler
 
 
@@ -17,13 +18,10 @@ class CustomView(context: Context) : View(context) {
     var selectedCircle: Circle? = null
     var latestInteraction : Circle? = null
 
-
     //create 26 circles that sits in a circle
     val circleList = mutableListOf<Circle>()
     //create list of all the letters in the alphabet
     var alphabet = arrayOf('x', 'p', 'j', 'v', 'z', 'c', 'g', 'w', 'm', 's', 'a', 't', 'h', 'e', 'r', 'o', 'n', 'i', 'f', 'l', 'd', 'u', 'k', 'b', 'y', 'q')
-
-
 
     init {
         for (i in 0..25) {
@@ -40,6 +38,13 @@ class CustomView(context: Context) : View(context) {
         strokeWidth = 5f
     }
 
+    val paint2 = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = Color.BLACK
+        style = Paint.Style.FILL
+        strokeWidth = 5f
+    }
+
+    val clean : Boolean = false
     var str = ""
 
     override fun onDraw(canvas: Canvas?) {
@@ -55,14 +60,16 @@ class CustomView(context: Context) : View(context) {
             drawCircle(530f, 1450f, 500f, paint)
             drawCircle(530f, 1450f, 400f, paint)
             Paint.Style.FILL
+
             drawText("Clear", 50f, 1970f, paint)
+            drawRect(200f, 1900f, 20f, 2000f, paint)
 
-            val clear = drawRect(200f, 1900f, 20f, 2000f, paint)
+            drawText("Backspace", 800f, 1970f, paint)
+            drawRect(1010f, 1900f, 790f, 2000f, paint)
 
-            paint.textSize = 75f
+            paint2.textSize = 75f
             Paint.Style.FILL
-            canvas.drawText(str, 10f, 100f, paint)
-
+            drawText(str, 10f, 100f, paint2)
         }
     }
 
@@ -96,6 +103,12 @@ class CustomView(context: Context) : View(context) {
                         touched = false
                         invalidate()
                     }
+                    if(x > 200f && x < 20f && y > 1900f && y < 2000f){
+
+                        str = ""
+                        Log.d("clear", str)
+                        invalidate()
+                    }
                 }
                 MotionEvent.ACTION_UP -> {
                     if (str != "") {
@@ -106,6 +119,8 @@ class CustomView(context: Context) : View(context) {
                 }
                 else -> return super.onTouchEvent(event)
             }
+
+
         }
         return true
     }

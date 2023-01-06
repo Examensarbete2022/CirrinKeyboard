@@ -12,7 +12,7 @@ open class MainActivity : Activity() {
         setContentView(CustomView(this))
 
         val trie = Trie()
-        trie.createTrieFromDictionary()
+        trie.fileNotFoundExceptionExample("Dictionary.txt")
         val word = "Hello"
         val result = trie.search(word)
         Log.d("Trie", "Word: $word, Result: $result")

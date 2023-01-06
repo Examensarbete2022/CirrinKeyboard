@@ -2,6 +2,7 @@ package com.example.examensarbete
 
 import java.io.BufferedReader
 import java.io.FileReader
+import java.io.IOException
 
 class Trie {
 
@@ -24,9 +25,8 @@ class Trie {
         return root
     }*/
 
-    fun createTrieFromDictionary(): Trie {
+    /*fun createTrieFromDictionary(): Trie {
         val root = Trie()
-
         try {
             val reader = BufferedReader(FileReader("Dictionary.txt"))
             val lines = reader.readLines()
@@ -36,8 +36,33 @@ class Trie {
             println("An error occurred while reading the dictionary file: $e")
         }
         return root
-    }
+    }*/
 
+    fun fileNotFoundExceptionExample( string: String) : Trie {
+        val root = Trie()
+        var br: BufferedReader? = null
+        try {
+            br = BufferedReader(FileReader(string))
+            println("File found" + br.readLine())
+            var line: String? = br.readLine()
+            while (br.readLine().also { line = it } != null) {
+                println("kommer vi in här?")
+                br.forEachLine { root.insert(it) }
+            }
+        } catch (ioe: IOException) {
+            println("File not found")
+            ioe.printStackTrace()
+        } finally {
+            try {
+                println("kommer vi in här 2?")
+                br?.close()
+            } catch (ioe: IOException) {
+                ioe.printStackTrace()
+                println("An error occurred while reading the dictionary file: $ioe")
+            }
+        }
+        return root
+    }
 
 /*fun createTrieFromDictionary(): Trie {
     val root = Trie()
@@ -57,8 +82,6 @@ class Trie {
 }
 
 */
-
-
     fun insert(word: String) {
         var currentNode = root
         for (char in word) {
