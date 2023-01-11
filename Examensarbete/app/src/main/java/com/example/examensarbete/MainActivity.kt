@@ -18,7 +18,6 @@ open class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(CustomView(this))
-
         val dbHelper = DBHelper(this, null)
         Log.d("wordCount", dbHelper.getWordCount().toString())
 
