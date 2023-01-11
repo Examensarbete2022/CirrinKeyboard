@@ -10,8 +10,11 @@ import android.view.MotionEvent
 import android.view.View
 import kotlin.math.cos
 import kotlin.math.sin
+import com.example.examensarbete.SpellChecker
 
 class CustomView(context: Context) : View(context) {
+
+    var dbHelper = DBHelper(context, null)
 
     var touched = false
     private var selectedCircle: Circle? = null
@@ -31,7 +34,6 @@ class CustomView(context: Context) : View(context) {
     var str = ""
     val circleList = mutableListOf<Circle>()
 
-
     init {
         for (i in 0..25) {
             val angle = i * 2 * Math.PI / 26
@@ -46,11 +48,17 @@ class CustomView(context: Context) : View(context) {
         style = Paint.Style.STROKE
         strokeWidth = 5f
     }
+    val paint2 = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = Color.BLACK
+        style = Paint.Style.FILL
+        strokeWidth = 5f
+    }
 
+    val clean : Boolean = false
+    var str = ""
 
     override fun onDraw(canvas: Canvas?) {
         canvas?.apply{
-
             drawCircles()
             drawAlphabet()
             drawTextInput()
@@ -96,6 +104,7 @@ class CustomView(context: Context) : View(context) {
                 str = inputs.joinToString("")
             }
             isDeleteLatestClicked = false
+
         }
     }
 
@@ -190,6 +199,12 @@ class CustomView(context: Context) : View(context) {
                     }
                 }
                 MotionEvent.ACTION_UP -> {
+                    var hej = str.split(" ").last()
+                    val hejsan = dbHelper.getSimilarNames(hej)
+                    val spellChecker = SpellChecker.Builder.setWordList(hejsan).build()
+                    val suggestions = spellChecker.suggest(hej)
+                    Log.d("similar", hejsan.toString())
+                    Log.d("spellCheck", suggestions.toString())
                     if (str != "") {
                         str += " "
                         latestInteraction = null
@@ -201,3 +216,4 @@ class CustomView(context: Context) : View(context) {
         return true
     }
 }
+
