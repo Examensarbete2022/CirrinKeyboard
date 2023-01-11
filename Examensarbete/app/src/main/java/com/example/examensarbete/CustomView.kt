@@ -7,11 +7,11 @@ import android.graphics.Paint
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import kotlinx.android.synthetic.main.activity_main.view.*
-import java.util.logging.Handler
-
+import com.example.examensarbete.SpellChecker
 
 class CustomView(context: Context) : View(context) {
+
+    var dbHelper = DBHelper(context, null)
 
     var touched = false
    // val circle1 = Circle(500f, 1200f, 25f)
@@ -103,14 +103,14 @@ class CustomView(context: Context) : View(context) {
                         touched = false
                         invalidate()
                     }
-                    if(x > 200f && x < 20f && y > 1900f && y < 2000f){
-
-                        str = ""
-                        Log.d("clear", str)
-                        invalidate()
-                    }
                 }
                 MotionEvent.ACTION_UP -> {
+                    var hej = str.split(" ").last()
+                    val hejsan = dbHelper.getSimilarNames(hej)
+                    val spellChecker = SpellChecker.Builder.setWordList(hejsan).build()
+                    val suggestions = spellChecker.suggest(hej)
+                    Log.d("similar", hejsan.toString())
+                    Log.d("spellCheck", suggestions.toString())
                     if (str != "") {
                         str += " "
                         latestInteraction = null
