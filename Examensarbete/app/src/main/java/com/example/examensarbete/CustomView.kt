@@ -48,8 +48,6 @@ class CustomView(context: Context) : View(context) {
     }
 
 
-
-
     override fun onDraw(canvas: Canvas?) {
         canvas?.apply{
 
@@ -81,21 +79,23 @@ class CustomView(context: Context) : View(context) {
     private fun Canvas.drawTextInput(){
         paint.textSize = 75f
         Paint.Style.FILL
-        drawText(str, 10f, 100f, paint)
+        val textBounds = Rect()
+        paint.getTextBounds(str, 0, str.length, textBounds)
+        val x = (screenWidth - textBounds.width()) / 2
+        val y = textBounds.height()*2
+        drawText(str, x.toFloat(), y.toFloat(), paint)
 
         if(isButtonClicked){
             str = ""
             isButtonClicked = false
-            invalidate()
         }
 
         if(isDeleteLatestClicked){
             if(inputs.isNotEmpty()){
                 inputs.removeAt(inputs.size-1)
-                str = inputs.joinToString(separator = "")
+                str = inputs.joinToString("")
             }
             isDeleteLatestClicked = false
-            invalidate()
         }
     }
 
