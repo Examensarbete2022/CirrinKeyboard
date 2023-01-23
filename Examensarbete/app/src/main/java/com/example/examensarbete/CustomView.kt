@@ -1,5 +1,6 @@
 package com.example.examensarbete
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -8,20 +9,23 @@ import android.graphics.Rect
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import kotlinx.coroutines.*
+import kotlinx.coroutines.GlobalScope.coroutineContext
+import java.util.*
 import kotlin.math.cos
 import kotlin.math.sin
-import com.example.examensarbete.SpellChecker
 
 class CustomView(context: Context) : View(context) {
 
     var dbHelper = DBHelper(context, null)
-
+    val cursor = dbHelper.getName()
+    val newInputs = mutableListOf<String>()
     var touched = false
     private var selectedCircle: Circle? = null
     private var latestInteraction : Circle? = null
     //variables for clear button and backspace button
-    private val inputs = mutableListOf<String>()
-    private var isButtonClicked = false
+    private val inputs = LinkedList<String>()
+    private var clearButtonClicked = false
     var isDeleteLatestClicked = false
     private val backSpaceRect = Rect()
     private val buttonRect = Rect()
@@ -31,7 +35,6 @@ class CustomView(context: Context) : View(context) {
     //create list of all the letters in the alphabet
     var alphabet = arrayOf('x', 'p', 'j', 'v', 'z', 'c', 'g', 'w', 'm', 's', 'a', 't', 'h', 'e', 'r', 'o', 'n', 'i', 'f', 'l', 'd', 'u', 'k', 'b', 'y', 'q')
     // string holding the letters that the user has selected
-    var str = ""
     val circleList = mutableListOf<Circle>()
 
     init {
@@ -48,11 +51,6 @@ class CustomView(context: Context) : View(context) {
         style = Paint.Style.STROKE
         strokeWidth = 5f
     }
-    val paint2 = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.BLACK
-        style = Paint.Style.FILL
-        strokeWidth = 5f
-    }
 
     val clean : Boolean = false
     var str = ""
@@ -61,10 +59,11 @@ class CustomView(context: Context) : View(context) {
         canvas?.apply{
             drawCircles()
             drawAlphabet()
+            // Ensures that the coroutine and the clear button and backspace functions are not modifying the value
+            // of the same variables at the same time:
             drawTextInput()
             clearButton()
             backSpaceButton()
-
         }
     }
 
@@ -154,7 +153,6 @@ class CustomView(context: Context) : View(context) {
     }
 
 
-
     override fun onTouchEvent(event: MotionEvent?): Boolean {
 
         event?.apply {
@@ -171,6 +169,7 @@ class CustomView(context: Context) : View(context) {
                         invalidate()
                     }
                 }
+
                 MotionEvent.ACTION_MOVE -> {
                     val isInsideCenterCircle = (x - 530) * (x - 530) + (y - 1450) * (y - 1450) < 400 * 400
                     selectedCircle = circleList.firstOrNull { it.contains(x, y) }
@@ -184,11 +183,12 @@ class CustomView(context: Context) : View(context) {
                             for (i in 0..25) {
                                 if (selectedCircle!! intersects circleList[i] && latestInteraction != circleList[i]) {
                                         str += alphabet[i]
-                                        inputs.add(alphabet[i].toString())
+                                        newInputs.add(alphabet[i].toString())
                                         latestInteraction = selectedCircle
                                     Log.d("Touched", "Touched move at: $str")
                                 }
                             }
+                            inputs.addAll(newInputs)
                         }else{
                             latestInteraction = null
                         }
@@ -199,12 +199,6 @@ class CustomView(context: Context) : View(context) {
                     }
                 }
                 MotionEvent.ACTION_UP -> {
-                    var hej = str.split(" ").last()
-                    val hejsan = dbHelper.getSimilarNames(hej)
-                    val spellChecker = SpellChecker.Builder.setWordList(hejsan).build()
-                    val suggestions = spellChecker.suggest(hej)
-                    Log.d("similar", hejsan.toString())
-                    Log.d("spellCheck", suggestions.toString())
                     if (str != "") {
                         str += " "
                         latestInteraction = null
